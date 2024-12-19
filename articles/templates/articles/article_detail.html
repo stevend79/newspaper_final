@@ -1,0 +1,27 @@
+{% block content %}
+<div class="card mt-4">
+    <div class="card-body">
+        <h2 class="card-title">{{ article.title }}</h2>
+        <p class="card-text">{{ article.body }}</p>
+        <small class="text-muted">Published on {{ article.date }}</small>
+    </div>
+</div>
+
+<h3 class="mt-4">Comments</h3>
+<ul class="list-group">
+    {% for comment in article.comments.all %}
+    <li class="list-group-item">
+        <strong>{{ comment.author }}</strong>: {{ comment.body }} ({{ comment.date }})
+    </li>
+    {% empty %}
+    <li class="list-group-item">No comments yet.</li>
+    {% endfor %}
+</ul>
+
+<h3 class="mt-4">Add a Comment</h3>
+<form method="post" class="mb-4">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Add Comment</button>
+</form>
+{% endblock %}
